@@ -56,7 +56,7 @@ function load_pterodactyl_path() {
         verify_pterodactyl_path $DEFAULT_PATH
     else
         if [ ! -d "$USER_PATH" ]; then
-            send_error "Der von dir angegebene Ordner existiert nicht oder GermanDactyl hat darauf keinen Zugriff."
+            send_error "Der von dir angegebene Ordner existiert nicht oder PteroInstaller hat darauf keinen Zugriff."
         fi
 
         verify_pterodactyl_path "$USER_PATH"
@@ -124,11 +124,11 @@ function show_rejected() {
 
 function compile_panel() {
     send_info "Das Panel wird nun erneut kompiliert. Das dauert einen Moment."
-    yarn install &> "$PTERODACTYL_PATH/germandactyl.debug.log"
-    yarn run build:production &> "$PTERODACTYL_PATH/germandactyl.debug.log"
-    NODE_OPTIONS=--openssl-legacy-provider yarn run build:production &> "$PTERODACTYL_PATH/germandactyl.debug.log"
-    php artisan view:clear &> "$PTERODACTYL_PATH/germandactyl.debug.log"
-    php artisan optimize &> "$PTERODACTYL_PATH/germandactyl.debug.log"
+    yarn install &> "$PTERODACTYL_PATH/PteroInstaller.debug.log"
+    yarn run build:production &> "$PTERODACTYL_PATH/PteroInstaller.debug.log"
+    NODE_OPTIONS=--openssl-legacy-provider yarn run build:production &> "$PTERODACTYL_PATH/PteroInstaller.debug.log"
+    php artisan view:clear &> "$PTERODACTYL_PATH/PteroInstaller.debug.log"
+    php artisan optimize &> "$PTERODACTYL_PATH/PteroInstaller.debug.log"
 }
 
 if [ $EUID -ne 0 ]; then
@@ -138,7 +138,7 @@ fi
 load_pterodactyl_path
 search_patch
 install_deps
-cd "$PTERODACTYL_PATH" || send_error "GermanDactyl konnte den Ordner der Instanz nicht betreten"
+cd "$PTERODACTYL_PATH" || send_error "PteroInstaller konnte den Ordner der Instanz nicht betreten"
 apply_patch
 show_rejected
 compile_panel
